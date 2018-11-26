@@ -21,10 +21,11 @@ private:
     std::vector<int> currentRoute;
     std::vector<int> bestRoute;
 
+    int startTown{};
     int bestDistance{INT_MAX};
     int currentDistance{};
 
-    void prepareToStart();
+    void prepend();
     void displayRoute();
     bool isBetter();
 };

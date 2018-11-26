@@ -6,33 +6,33 @@
 #include "BruteForce.h"
 
 void BruteForce::generateSolution() {
+    prepend();
 
-    prepareToStart();
+ do {
+        currentDistance = graph->calculateOverallDistance(currentRoute);
 
-    do {
-       currentDistance = graph->calculateOverallDistance(currentRoute);
+        if (isBetter()) {
+            bestDistance = currentDistance;
+            bestRoute = currentRoute;
+            displayRoute();
+        }
 
-       if (isBetter()) {
-           bestDistance = currentDistance;
-           bestRoute = currentRoute;
-           displayRoute();
-       }
-
-    } while (std::next_permutation(currentRoute.begin(), currentRoute.end()));
-
-
+    } while (std::next_permutation(currentRoute.begin() + 1, currentRoute.end() - 1));
+ 
 }
 
-void BruteForce::prepareToStart() {
+void BruteForce::prepend() {
     currentRoute.clear();
     bestRoute.clear();
 
     currentRoute.reserve(graph->getNumberOfCities());
-    bestRoute.reserve(graph->getNumberOfCities());
+    bestRoute.reserve(graph->getNumberOfCities() + 1);
 
-    for (int i = 0; i < graph->getNumberOfCities(); i++) {
-        currentRoute.push_back(i);
+    for (int town = 0; town < graph->getNumberOfCities(); town++) {
+        currentRoute.push_back(town);
     }
+
+    currentRoute.push_back(startTown);
 
 }
 

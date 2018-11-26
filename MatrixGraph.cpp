@@ -58,16 +58,19 @@ int MatrixGraph::calculateOverallDistance(const std::vector<int> &route) {
         if (isDiagonal(route.at(town), route.at(town + 1))) {
                 continue;
         }
-
         distance += getDistance(route.at(town), route.at(town+1));
+        std::cout << distance << "\t";
+
     }
 
     distance += getDistanceFromLastToFirst(route.at(route.size() -1), 0);
+    std::cout << distance << "\t";
+
     return distance;
 }
 
 int MatrixGraph::getDistance(const int from, const int to) const {
-    return  matrix[from][to];
+    return  matrix[to][from];
 }
 
 int MatrixGraph::getDistanceFromLastToFirst(const int from, const int to) const {

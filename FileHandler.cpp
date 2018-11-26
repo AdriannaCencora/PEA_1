@@ -6,9 +6,11 @@
 
 void FileHandler::readDataFromFile(MatrixGraph *matrixGraph) {
 
+    //std::string dataName;
     int buffer{};
     int numberOfCities{};
     int column{}, row{};
+    //inputFile >> dataName;
     inputFile >> numberOfCities;
     matrixGraph->setNumberOfCities(numberOfCities);
 
