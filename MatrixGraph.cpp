@@ -50,3 +50,30 @@ void MatrixGraph::fillMatrixWithRandomData() {
         matrix[diagonal][diagonal] = -1;
     }
 }
+
+int MatrixGraph::calculateOverallDistance(const std::vector<int> &route) {
+    int distance{};
+
+    for (int town = 0; town < (route.size() - 1); town++) {
+        if (isDiagonal(route.at(town), route.at(town + 1))) {
+                continue;
+        }
+
+        distance += getDistance(route.at(town), route.at(town+1));
+    }
+
+    distance += getDistanceFromLastToFirst(route.at(route.size() -1), 0);
+    return distance;
+}
+
+int MatrixGraph::getDistance(const int from, const int to) const {
+    return  matrix[from][to];
+}
+
+int MatrixGraph::getDistanceFromLastToFirst(const int from, const int to) const {
+    return getDistance(from, to);
+}
+
+bool MatrixGraph::isDiagonal(const int from, const int to) {
+    return (getDistance(from, to) < 0);
+}

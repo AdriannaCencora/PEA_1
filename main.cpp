@@ -1,6 +1,7 @@
 #include <iostream>
 #include "MatrixGraph.h"
 #include "FileHandler.h"
+#include "BruteForce.h"
 
 using namespace std;
 
@@ -43,6 +44,11 @@ int main() {
             }
             case '3': {
                 matrixGraph->printMatrix();
+                break;
+            }
+            case '4': {
+                BruteForce bruteForceAlgorithm(matrixGraph);
+                bruteForceAlgorithm.generateSolution();
                 break;
             }
 

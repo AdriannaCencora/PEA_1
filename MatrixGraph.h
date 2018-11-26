@@ -16,13 +16,16 @@ public:
     int getNumberOfCities () const;
     void printMatrix() const;
     void fillMatrixWithRandomData();
+    int calculateOverallDistance(const std::vector<int> &route);
 
 private:
     std::vector<std::vector<int>> matrix;
     int numberOfCities{};
 
-
+    int getDistance(const int from, const int to) const;
+    int getDistanceFromLastToFirst(const int from, const int to) const;
     void setMatrixGraphSize();
+    bool isDiagonal(const int from, const int to);
 
 };
 
