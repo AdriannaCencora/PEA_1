@@ -3,46 +3,100 @@
 //
 
 #include <algorithm>
+#include <chrono>
 #include "BruteForce.h"
 
-void BruteForce::generateSolution() {
+void BruteForce::run() {
     prepend();
+    startTime = std::chrono::high_resolution_clock::now();
+    generateSolution(startTown);
+    endTime = std::chrono::high_resolution_clock::now();
+    timeInMilliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count();
+    displayRouteDetails();
 
- do {
-        currentDistance = graph->calculateOverallDistance(currentRoute);
-
-        if (isBetter()) {
-            bestDistance = currentDistance;
-            bestRoute = currentRoute;
-            displayRoute();
-        }
-
-    } while (std::next_permutation(currentRoute.begin() + 1, currentRoute.end() - 1));
- 
 }
 
 void BruteForce::prepend() {
-    currentRoute.clear();
-    bestRoute.clear();
+    numberOfCities = graph->getNumberOfCities();
 
-    currentRoute.reserve(graph->getNumberOfCities());
-    bestRoute.reserve(graph->getNumberOfCities() + 1);
-
-    for (int town = 0; town < graph->getNumberOfCities(); town++) {
-        currentRoute.push_back(town);
+    if (numberOfCities < 2) {
+        throw std::runtime_error("Matrix contains only one city!");
     }
 
-    currentRoute.push_back(startTown);
+    currentRoute.clear();
+    bestRoute.clear();
+    visitedTowns.clear();
+
+    currentRoute.reserve(numberOfCities);
+    bestRoute.reserve(numberOfCities + 1);
+    visitedTowns.resize(numberOfCities);
 
 }
 
-void BruteForce::displayRoute() {
+void BruteForce::generateSolution(int currentTown) {
+    currentRoute.push_back(currentTown);
+    visitedTowns[currentTown] = true;
+
+    if (currentRoute.size() < numberOfCities) {
+        handleTheRoute(currentTown);
+    } else {
+        handleLasElementOfRoute(currentTown);
+    }
+
+    visitedTowns[currentTown] = false;
+    currentRoute.pop_back();
+
+}
+
+void BruteForce::handleTheRoute(int currentTown) {
+    int distanceToNext{};
+    for (unsigned nextTown{0}; nextTown < numberOfCities; ++nextTown) {
+        if (!visitedTowns[nextTown]) {
+            distanceToNext = graph->getDistance(currentTown, nextTown);
+
+            if (distanceToNext < 0) {
+                continue;
+            }
+            currentDistance += distanceToNext;
+
+            generateSolution(nextTown);
+
+            currentDistance -= distanceToNext;
+        }
+    }
+}
+
+void BruteForce::handleLasElementOfRoute(int currentTown) {
+    numberOfChecks++;
+
+    int distanceToNext = graph->getDistance(currentTown, startTown);
+
+    if (distanceToNext < 0)
+        return;
+
+    currentDistance += distanceToNext;
+
+    if (isBetter()) {
+        bestDistance = currentDistance;
+        bestRoute = currentRoute;
+        bestRoute.push_back(startTown);
+    }
+    currentDistance -= distanceToNext;
+
+}
+
+
+void BruteForce::displayRouteDetails() {
     std::cout << "Current best route is: ";
-    for (const auto &town : bestRoute) {
-        std::cout << town << "  ";
+    for (const auto &currentTown: bestRoute) {
+        std::cout << currentTown << "  ";
 
     }
-    std::cout << bestDistance << std::endl;
+    std::cout << std::endl << "Distance: " << bestDistance << std::endl;
+    std::cout << "Number of checks: " << numberOfChecks << std::endl;
+    std::cout << "Time of Brute Force algorithm: " << timeInMilliseconds << std::endl;
+
+
 }
 
 bool BruteForce::isBetter() {

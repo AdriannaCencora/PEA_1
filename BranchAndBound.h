@@ -6,16 +6,24 @@
 
 
 #include "MatrixGraph.h"
+#include "Algorithm.h"
 
-class BranchAndBound {
+class BranchAndBound : public  Algorithm {
 public:
     BranchAndBound() = delete;
     ~BranchAndBound() = default;
-    explicit BranchAndBound(MatrixGraph *matrixGraph) : graph(matrixGraph) {}
-    void generateSolution();
+    explicit BranchAndBound(MatrixGraph *grap) : Algorithm (graph) {}
+    void run() override ;
 
 private:
-    MatrixGraph *graph;
+    void prepend();
+    void generateSolution(int startTown);
+    void calculateStartingLowerBound();
+    void handleTheRoute(int town);
+    void handleLasElementOfRoute(int town);
+    void displayRouteDetails();
+    int currentLowerBound;
+    std::vector<std::vector<int>> lowestDistancesToVertices;
 };
 
 

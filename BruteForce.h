@@ -8,25 +8,29 @@
 #include <vector>
 #include <climits>
 #include "MatrixGraph.h"
+#include "Algorithm.h"
 
-class BruteForce {
+class BruteForce : public  Algorithm {
 public:
     BruteForce() = delete;
-
-    explicit BruteForce(MatrixGraph *matrixGraph) : graph(matrixGraph) {}
-    void generateSolution();
+    BruteForce(MatrixGraph *graph) : Algorithm(graph) {}
+    void run() override ;
+    virtual ~BruteForce() = default;
 
 private:
-    MatrixGraph *graph;
     std::vector<int> currentRoute;
     std::vector<int> bestRoute;
-
+    std::vector<bool> visitedTowns;
+    int numberOfCities{};
+    int numberOfChecks{};
     int startTown{};
     int bestDistance{INT_MAX};
     int currentDistance{};
-
+    void handleTheRoute(int town);
+    void handleLasElementOfRoute(int town);
+    void displayRouteDetails();
+    void generateSolution(int town);
     void prepend();
-    void displayRoute();
     bool isBetter();
 };
 

@@ -7,6 +7,7 @@
 
 #include "MatrixGraph.h"
 #include "FileHandler.h"
+#include "Algorithm.h"
 
 class Application {
 public:
@@ -18,7 +19,8 @@ public:
 
 
 private:
-    MatrixGraph* matrixGraph = new MatrixGraph();
+    MatrixGraph *matrixGraph = new MatrixGraph();
+    Algorithm *algorithm;
     char userChoice{};
     bool isRunning{true};
 };

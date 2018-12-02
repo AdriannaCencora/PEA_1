@@ -2,6 +2,7 @@
 // Created by adrianna on 27/11/18.
 //
 
+#include <chrono>
 #include "Application.h"
 #include "BruteForce.h"
 #include "BranchAndBound.h"
@@ -26,84 +27,58 @@ void Application::run() {
     while (isRunning) {
         displayMenu();
 
-        cin >>
-            userChoice;
+        cin >> userChoice;
 
         switch (userChoice) {
             case '1': {
                 std::string fileName;
-                std::cout << "Filename: " <<
-                          std::endl;
-                cin >>
-                    fileName;
+                std::cout << "Filename: " << std::endl;
+                cin >> fileName;
                 auto fileHandler = new FileHandler(fileName);
-                fileHandler->
-                        readDataFromFile(matrixGraph);
-                cout << "Number of cities: " << matrixGraph->
-
-                        getNumberOfCities()
-
-                     <<
-                     endl;
-                delete
-                        fileHandler;
+                fileHandler->readDataFromFile(matrixGraph);
+                cout << "Number of cities: " << matrixGraph->getNumberOfCities() << endl;
+                delete fileHandler;
                 break;
             }
             case '2': {
                 int sizeOfMatrix{};
-                std::cout << "Number of cities: " <<
-                          std::endl;
-                std::cin >>
-                         sizeOfMatrix;
-                matrixGraph->
-                        setNumberOfCities(sizeOfMatrix);
-                matrixGraph->
-
-                        fillMatrixWithRandomData();
-
+                std::cout << "Number of cities: " << std::endl;
+                std::cin >> sizeOfMatrix;
+                matrixGraph->setNumberOfCities(sizeOfMatrix);
+                matrixGraph->fillMatrixWithRandomData();
+                break;
             }
             case '3': {
-                matrixGraph->
-
-                        printMatrix();
-
+                matrixGraph->printMatrix();
                 break;
             }
             case '4': {
-                BruteForce bruteForceAlgorithm(matrixGraph);
-                bruteForceAlgorithm.
-
-                        generateSolution();
-
+                algorithm = new BruteForce(matrixGraph);
+                algorithm->run();
                 break;
             }
             case '5': {
-                BranchAndBound branchAndBoundAlgorithm(matrixGraph);
-                branchAndBoundAlgorithm.
-
-                        generateSolution();
-
+                algorithm = new BranchAndBound(matrixGraph);
+                algorithm->run();
                 break;
             }
             case '6': {
-                DynamicProgramming dynamicProgrammingAlgorithm(matrixGraph);
-                dynamicProgrammingAlgorithm.
-
-                        generateSolution();
-
+                algorithm = new DynamicProgramming(matrixGraph);
+                algorithm->run();
+                break;
             }
             case '0':
                 isRunning = false;
                 break;
             default:
-                cout << "Wrooong number, next time choose better!" << endl <<
-                     endl;
+                cout << "Wrooong number, next time choose better!" << endl << endl;
                 break;
         }
+
     }
 
 
     delete matrixGraph;
-
+    delete algorithm;
 }
 
