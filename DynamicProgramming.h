@@ -14,6 +14,7 @@ public:
         numberOfSubproblems = (1 << (graph->getNumberOfCities() ));
     }
     void run() override;
+    void displayRouteDetails() override ;
 
 private:
     long long numberOfSubproblems{};
@@ -21,17 +22,16 @@ private:
     std::vector<std::vector<int>> valueVector;
     std::vector<int> outputPath;
     int result{};
-    int getCost(int start, long long int set);
-    void getPath(int start, long long int set);
+    int getCost(int start, long set);
+    void getPath(int start, long set);
 
-    int getValue(long long int x, long long int y);
-    int getPathValue(long long int x, long long int y);
+    int getValue(long x, long y);
+    int getPathValue(long  x, long y);
 
-    void setValue(long long int x, long long int y, int value);
-    void setPathValue(long long int x, long long int y, int value);
+    void setValue(long x, long  y, int value);
+    void setPathValue(long x, long  y, int value);
     void generateSolution();
     void prepend();
-    void displayRouteDetails();
 };
 
 

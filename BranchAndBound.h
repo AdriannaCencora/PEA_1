@@ -7,22 +7,20 @@
 
 #include "MatrixGraph.h"
 #include "Algorithm.h"
+#include "BruteForce.h"
 
-class BranchAndBound : public  Algorithm {
+class BranchAndBound : public  BruteForce {
 public:
-    BranchAndBound() = delete;
+    BranchAndBound() = default;
     ~BranchAndBound() = default;
-    explicit BranchAndBound(MatrixGraph *grap) : Algorithm (graph) {}
-    void run() override ;
-
+    BranchAndBound(MatrixGraph *graph) : BruteForce (graph) {}
+    void displayRouteDetails() override;
 private:
-    void prepend();
-    void generateSolution(int startTown);
+    void prepend() override;
+    void handleTheRoute(int currentTown) override ;
+
     void calculateStartingLowerBound();
-    void handleTheRoute(int town);
-    void handleLasElementOfRoute(int town);
-    void displayRouteDetails();
-    int currentLowerBound;
+    int currentLowerBound{};
     std::vector<std::vector<int>> lowestDistancesToVertices;
 };
 

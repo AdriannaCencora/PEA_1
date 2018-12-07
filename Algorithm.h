@@ -10,8 +10,10 @@
 
 class Algorithm {
 public:
+    Algorithm() = default;
     Algorithm(MatrixGraph *matrixGraph)  : graph(matrixGraph) {}
     virtual void run() = 0;
+    virtual void displayRouteDetails() = 0;
     virtual ~Algorithm() = default;
 protected:
     MatrixGraph *graph;

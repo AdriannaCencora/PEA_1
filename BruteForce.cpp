@@ -12,7 +12,6 @@ void BruteForce::run() {
     generateSolution(startTown);
     endTime = std::chrono::high_resolution_clock::now();
     timeInMilliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count();
-    displayRouteDetails();
 
 }
 

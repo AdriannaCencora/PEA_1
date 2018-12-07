@@ -3,6 +3,7 @@
 //
 
 #include <random>
+#include <climits>
 #include "MatrixGraph.h"
 
 void MatrixGraph::addEdge(int from, int to, int value) {
@@ -34,7 +35,9 @@ void MatrixGraph::printMatrix() const {
     std::cout << std::endl;
 }
 
-void MatrixGraph::fillMatrixWithRandomData() {
+void MatrixGraph::fillMatrixWithRandomData(int numberOfCities) {
+    setNumberOfCities(numberOfCities);
+
     const int upperRange = 150;
     std::random_device seed;
     std::mt19937 randomGenerator(seed());
@@ -77,4 +80,25 @@ int MatrixGraph::getDistanceFromLastToFirst(const int from, const int to) const 
 
 bool MatrixGraph::isDiagonal(const int from, const int to) {
     return (getDistance(from, to) < 0);
+}
+
+int MatrixGraph::getMinDistanceFrom(int town) const{
+    int min{INT_MAX};
+
+    for (int i{0}; i < matrix.size(); ++i) {
+        if (matrix[town][i] < min && matrix[town][i] > 0) {
+            min = matrix[town][i];
+        }
+    }
+    return  min;
+}
+int MatrixGraph::getMinDistanceTo(int town) const {
+    int min{INT_MAX};
+
+    for (const auto &vector : matrix) {
+        if(vector[town] < min && vector[town] > 0 ) {
+            min = vector[town];
+        }
+    }
+    return  min;
 }

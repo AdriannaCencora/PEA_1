@@ -11,7 +11,6 @@ void DynamicProgramming::run() {
     generateSolution();
     endTime = std::chrono::high_resolution_clock::now();
     timeInMilliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count();
-    displayRouteDetails();
 
 }
 
@@ -43,7 +42,7 @@ void DynamicProgramming::prepend() {
 }
 
 
-int DynamicProgramming::getCost(int start, long long int set) {
+int DynamicProgramming::getCost(int start, long set) {
     long long int masked;
     long long int mask;
     int result = -1;
@@ -72,7 +71,7 @@ int DynamicProgramming::getCost(int start, long long int set) {
 }
 
 
-void DynamicProgramming::getPath(int start, long long int set) {
+void DynamicProgramming::getPath(int start, long  set) {
     if (getPathValue(start, set) == -1)
         return;
 
@@ -86,20 +85,20 @@ void DynamicProgramming::getPath(int start, long long int set) {
 
 }
 
-int DynamicProgramming::getValue(long long int x, long long int y) {
+int DynamicProgramming::getValue(long x, long  y) {
     return valueVector[x][y];
 
 }
 
-int DynamicProgramming::getPathValue(long long int x, long long int y) {
+int DynamicProgramming::getPathValue(long x, long  y) {
     return pathVector[x][y];
 }
 
-void DynamicProgramming::setValue(long long int x, long long int y, int value) {
+void DynamicProgramming::setValue(long x, long y, int value) {
     valueVector[x][y] = value;
 }
 
-void DynamicProgramming::setPathValue(long long int x, long long int y, int value) {
+void DynamicProgramming::setPathValue(long x, long y, int value) {
     pathVector[x][y] = value;
 }
 
@@ -111,6 +110,6 @@ void DynamicProgramming::displayRouteDetails() {
     }
     std::cout << std::endl << "Distance: " << result << std::endl;
    // std::cout << "Number of checks: " << numberOfChecks << std::endl;
-    std::cout << "Time of Brute Force algorithm: " << timeInMilliseconds << std::endl;
+    std::cout << "Time of Dynamic Programming algorithm: " << timeInMilliseconds << std::endl;
 
 }

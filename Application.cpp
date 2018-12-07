@@ -7,6 +7,7 @@
 #include "BruteForce.h"
 #include "BranchAndBound.h"
 #include "DynamicProgramming.h"
+#include "Test.h"
 
 using namespace std;
 
@@ -19,6 +20,7 @@ void Application::displayMenu() {
     cout << "4. Brute force algorithm." << endl;
     cout << "5. Branch and bound algorithm." << endl;
     cout << "6. Dynamic programming." << endl;
+    cout << "7. Test." << endl;
     cout << "0. Exit." << endl;
 
 }
@@ -44,8 +46,7 @@ void Application::run() {
                 int sizeOfMatrix{};
                 std::cout << "Number of cities: " << std::endl;
                 std::cin >> sizeOfMatrix;
-                matrixGraph->setNumberOfCities(sizeOfMatrix);
-                matrixGraph->fillMatrixWithRandomData();
+                matrixGraph->fillMatrixWithRandomData(sizeOfMatrix);
                 break;
             }
             case '3': {
@@ -55,16 +56,24 @@ void Application::run() {
             case '4': {
                 algorithm = new BruteForce(matrixGraph);
                 algorithm->run();
+                algorithm->displayRouteDetails();
                 break;
             }
             case '5': {
                 algorithm = new BranchAndBound(matrixGraph);
                 algorithm->run();
+                algorithm->displayRouteDetails();
                 break;
             }
             case '6': {
                 algorithm = new DynamicProgramming(matrixGraph);
                 algorithm->run();
+                algorithm->displayRouteDetails();
+                break;
+            }
+            case '7': {
+                Test test(matrixGraph);
+                test.run();
                 break;
             }
             case '0':

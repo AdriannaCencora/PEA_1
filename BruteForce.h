@@ -12,12 +12,13 @@
 
 class BruteForce : public  Algorithm {
 public:
-    BruteForce() = delete;
+    BruteForce() = default;
     BruteForce(MatrixGraph *graph) : Algorithm(graph) {}
     void run() override ;
+    void displayRouteDetails() override ;
     virtual ~BruteForce() = default;
 
-private:
+protected:
     std::vector<int> currentRoute;
     std::vector<int> bestRoute;
     std::vector<bool> visitedTowns;
@@ -26,12 +27,12 @@ private:
     int startTown{};
     int bestDistance{INT_MAX};
     int currentDistance{};
-    void handleTheRoute(int town);
-    void handleLasElementOfRoute(int town);
-    void displayRouteDetails();
-    void generateSolution(int town);
-    void prepend();
-    bool isBetter();
+
+    virtual void handleTheRoute(int town);
+    virtual void handleLasElementOfRoute(int town);
+    virtual void generateSolution(int town);
+    virtual void prepend();
+    virtual bool isBetter();
 };
 
 

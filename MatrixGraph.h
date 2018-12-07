@@ -15,10 +15,11 @@ public:
     void setNumberOfCities(int _numberOfCities);
     int getNumberOfCities () const;
     void printMatrix() const;
-    void fillMatrixWithRandomData();
+    void fillMatrixWithRandomData(int numberOfCities);
     int calculateOverallDistance(const std::vector<int> &route);
     int getDistance(const int from, const int to) const;
-
+    int getMinDistanceTo(int town) const;
+    int getMinDistanceFrom(int town) const;
 private:
     std::vector<std::vector<int>> matrix;
     int numberOfCities{};

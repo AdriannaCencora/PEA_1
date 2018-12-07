@@ -20,7 +20,7 @@ public:
 
 private:
     MatrixGraph *matrixGraph = new MatrixGraph();
-    Algorithm *algorithm;
+    Algorithm *algorithm{};
     char userChoice{};
     bool isRunning{true};
 };
