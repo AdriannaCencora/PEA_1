@@ -18,21 +18,20 @@ public:
     void displayRouteDetails() override ;
     virtual ~BruteForce() = default;
 
-protected:
+private:
     std::vector<int> currentRoute;
     std::vector<int> bestRoute;
-    std::vector<bool> visitedTowns;
+
     int numberOfCities{};
     int numberOfChecks{};
-    int startTown{};
+    int startTown{0};
     int bestDistance{INT_MAX};
     int currentDistance{};
 
-    virtual void handleTheRoute(int town);
-    virtual void handleLasElementOfRoute(int town);
-    virtual void generateSolution(int town);
-    virtual void prepend();
-    virtual bool isBetter();
+
+    void generateSolution();
+    void prepend();
+    bool isBetter();
 };
 
 

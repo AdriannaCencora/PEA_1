@@ -9,15 +9,14 @@
 #include "Algorithm.h"
 #include "BruteForce.h"
 
-class BranchAndBound : public  BruteForce {
+class BranchAndBound : public Algorithm {
 public:
     BranchAndBound() = default;
     ~BranchAndBound() = default;
-    BranchAndBound(MatrixGraph *graph) : BruteForce (graph) {}
+    BranchAndBound(MatrixGraph *graph) : Algorithm (graph) {}
     void displayRouteDetails() override;
 private:
-    void prepend() override;
-    void handleTheRoute(int currentTown) override ;
+    void prepend();
 
     void calculateStartingLowerBound();
     int currentLowerBound{};
