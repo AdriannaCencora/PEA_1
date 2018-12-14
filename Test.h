@@ -22,7 +22,6 @@ private:
     Algorithm *algorithm{};
     std::fstream outputFile{};
     void prepend();
-    void writeToFile();
     std::string measureTime();
 
 

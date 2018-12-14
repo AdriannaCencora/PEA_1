@@ -71,21 +71,21 @@ int MatrixGraph::calculateOverallDistance(const std::vector<int> &route) {
 }
 
 int MatrixGraph::getDistance(const int from, const int to) const {
-    return  matrix[to][from];
+    return  (isDiagonal(from, to) ? 0 : matrix[to][from]);
 }
 
 int MatrixGraph::getDistanceFromLastToFirst(const int from, const int to) const {
     return getDistance(from, to);
 }
 
-bool MatrixGraph::isDiagonal(const int from, const int to) {
-    return (getDistance(from, to) < 0);
+bool MatrixGraph::isDiagonal(const int from, const int to) const {
+    return ( matrix[from][to] < 0);
 }
 
 int MatrixGraph::getMinDistanceFrom(int town) const{
     int min{INT_MAX};
 
-    for (int i{0}; i < matrix.size(); ++i) {
+    for (unsigned i{0}; i < matrix.size(); ++i) {
         if (matrix[town][i] < min && matrix[town][i] > 0) {
             min = matrix[town][i];
         }

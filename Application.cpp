@@ -60,9 +60,9 @@ void Application::run() {
                 break;
             }
             case '5': {
-//                algorithm = new BranchAndBound(matrixGraph);
-//                algorithm->run();
-//                algorithm->displayRouteDetails();
+                algorithm = new BranchAndBound(matrixGraph);
+                algorithm->run();
+                algorithm->displayRouteDetails();
                 break;
             }
             case '6': {

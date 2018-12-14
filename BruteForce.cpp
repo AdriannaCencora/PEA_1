@@ -8,10 +8,10 @@
 
 void BruteForce::run() {
     prepend();
-    startTime = std::chrono::high_resolution_clock::now();
+ //   startTime = std::chrono::high_resolution_clock::now();
     generateSolution();
-    endTime = std::chrono::high_resolution_clock::now();
-    timeInMilliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count();
+   // endTime = std::chrono::high_resolution_clock::now();
+   // timeInMilliseconds = std::chrono::duration_cast<std::chrono::microseconds>(endTime - startTime).count();
 
 }
 

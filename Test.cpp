@@ -11,17 +11,14 @@
 
 void Test::run() {
     prepend();
-std::cout <<    measureTime();
+std::cout <<   measureTime();
 }
 
-void Test::writeToFile() {
-
-}
 
 void Test::prepend() {
     std::string path = "../results/";
     path += "test-";
-    path += "DP";
+    path += "bruteFinal";
     path += ".txt";
     outputFile.open(path, std::fstream::out);
 
@@ -34,8 +31,9 @@ void Test::prepend() {
 std::string Test::measureTime() {
     std::stringstream outputConsole;
     outputConsole.setf(std::ios::fixed);
-    int townsNumber = 20;
+    int townsNumber = 15;
     int tests = 100;
+    long long timeInMillisecondsForTests;
 
     // algorithm = new BruteForce(graph);
    // algorithm = new BranchAndBound(graph);

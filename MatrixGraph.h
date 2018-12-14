@@ -26,7 +26,7 @@ private:
 
     int getDistanceFromLastToFirst(const int from, const int to) const;
     void setMatrixGraphSize();
-    bool isDiagonal(const int from, const int to);
+    bool isDiagonal(const int from, const int to) const;
 
 };
 
