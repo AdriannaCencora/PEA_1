@@ -10,7 +10,8 @@ void BranchAndBound::run() {
         prepend();
      //   startTime = std::chrono::high_resolution_clock::now();
           calculateStartingLowerBound();
-           DFS();
+         //  DFS();
+    BeFS();
        // endTime = std::chrono::high_resolution_clock::now();
         //timeInMilliseconds = std::chrono::duration_cast<std::chrono::microseconds>(endTime - startTime).count();
 }
@@ -25,11 +26,11 @@ void BranchAndBound::prepend() {
 
     lowestDistancesToTowns.clear();
     lowestDistancesToTowns.resize(numberOfCities);
-    initialRoot.visited.resize(numberOfCities, false);
-    initialRoot.path.reserve(numberOfCities);
-    initialRoot.path.push_back(startTown);
-    initialRoot.visited[0] = true;
-    initialRoot.value = INT32_MAX;
+    best.visited.resize(numberOfCities, false);
+    best.path.reserve(numberOfCities);
+    best.path.push_back(startTown);
+    best.visited[0] = true;
+    best.value = INT32_MAX;
 
 }
 
@@ -50,23 +51,75 @@ void BranchAndBound::calculateStartingLowerBound() {
 
     currentLowerBound = currentLowerBound / 2;
 }
-void BranchAndBound::DFS() {
-    initialRoot.lowerBound = currentLowerBound;
-    stackDFS.push(initialRoot);
-    BnBNode child, current;
+
+void BranchAndBound::BeFS() {
+    best.lowerBound = currentLowerBound;
+    containerBeFS.push(best);
+    BnBNode current{}, child{};
 
     do {
-        current = stackDFS.top();
-        stackDFS.pop();
+        current = containerBeFS.top();
+        containerBeFS.pop();
 
         if (current.path.size() == numberOfCities) {    //Leaf.
 
-            if (current.value < initialRoot.value) {
-                initialRoot = current;
+            if (current.value < best.value) {
+                best = current;
             }
 
-            initialRoot.value = initialRoot.value + graph->getDistance(initialRoot.path.back(), initialRoot.path.front());
-            initialRoot.path.push_back(current.path.front());
+            best.value = best.value + graph->getDistance(best.path.back(), best.path.front());
+            best.path.push_back(current.path.front());
+        } else { //not leaf
+            for (unsigned int town{1}; town < numberOfCities; ++town) {
+                if (current.visited[town] == false) {
+                    child = current;
+                    child.visited[town] = true;
+                    if (child.path.size() == 1) { //Level one.
+                        child.lowerBound = child.lowerBound
+                                           - (lowestDistancesToTowns[child.path.back()][1] +
+                                              lowestDistancesToTowns[town][0]) / 2
+                                           + graph->getDistance(child.path.back(), town);
+                        child.value = graph->getDistance(child.path.back(), town);
+                    } else {
+                        child.lowerBound = child.lowerBound
+                                           - (lowestDistancesToTowns[child.path.back()][1] +
+                                              lowestDistancesToTowns[town][0]) / 2
+                                           + graph->getDistance(child.path.back(), town);
+                        child.value = child.value + graph->getDistance(child.path.back(), town);
+                    }
+
+                    child.path.push_back(town);
+                    if (child.lowerBound <= best.value)
+                        containerBeFS.push(child);
+
+
+                }
+            }
+
+
+        }
+
+    } while (!containerBeFS.empty());
+
+}
+
+void BranchAndBound::DFS() {
+    best.lowerBound = currentLowerBound;
+    containerDFS.push(best);
+    BnBNode child, current;
+
+    do {
+        current = containerDFS.top();
+        containerDFS.pop();
+
+        if (current.path.size() == numberOfCities) {    //Leaf.
+
+            if (current.value < best.value) {
+                best = current;
+            }
+
+            best.value = best.value + graph->getDistance(best.path.back(), best.path.front());
+            best.path.push_back(current.path.front());
         }
 
         else { //not leaf
@@ -74,7 +127,7 @@ void BranchAndBound::DFS() {
                 if (current.visited[town] == false) {
                     child = current;
                     child.visited[town] = true;
-                    if (child.path.size() == 1) {
+                    if (child.path.size() == 1) { //Level one.
                         child.lowerBound = child.lowerBound
                                            - (lowestDistancesToTowns[child.path.back()][1] + lowestDistancesToTowns[town][0]) / 2
                                            + graph->getDistance(child.path.back(), town);
@@ -88,25 +141,25 @@ void BranchAndBound::DFS() {
                     }
 
                     child.path.push_back(town);
-                    if (child.lowerBound <= initialRoot.value)
-                        stackDFS.push(child);
+                    if (child.lowerBound <= best.value)
+                        containerDFS.push(child);
 
 
                 }
             }
         }
 
-    }  while (!stackDFS.empty());
+    }  while (!containerDFS.empty());
 }
 
 
 void BranchAndBound::displayRouteDetails() {
     std::cout << "The best route is: ";
-    for (auto &town : initialRoot.path) {
+    for (auto &town : best.path) {
         std::cout << town <<" ";
     }
 
-    std::cout << std::endl << "Distance: " << initialRoot.value << std::endl;
+    std::cout << std::endl << "Distance: " << best.value << std::endl;
     std::cout << "Time of BranchAndBound algorithm: " << timeInMilliseconds << std::endl;
 
 

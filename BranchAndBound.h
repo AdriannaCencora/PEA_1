@@ -9,13 +9,22 @@
 #include "Algorithm.h"
 #include "BruteForce.h"
 #include <stack>
+#include <queue>
+
+struct BnBNode {
+    std::vector<unsigned int> path{};
+    std::vector<bool> visited{false};
+    double lowerBound{};
+    double value{};
+
+    bool operator<(const BnBNode& rhs) const {
+        return (value > rhs.value);
+    }
+
+};
+
 class BranchAndBound : public Algorithm {
-    struct BnBNode {
-        std::vector<unsigned int> path;
-        std::vector<bool> visited;
-        double lowerBound;
-        double value;
-    };
+
 
 public:
     BranchAndBound() = default;
@@ -23,18 +32,21 @@ public:
     BranchAndBound(MatrixGraph *graph) : Algorithm (graph) {}
     void run() override;
     void displayRouteDetails() override;
+
 private:
+    BnBNode best{};
+
     void prepend();
     void calculateStartingLowerBound();
     void DFS();
+    void BeFS();
     int numberOfCities{};
     int currentLowerBound{};
     std::vector<std::vector<int>> lowestDistancesToTowns;
 
     int startTown{0};
-    BnBNode initialRoot{};
-    std::stack<BnBNode> stackDFS;
-
+    std::stack<BnBNode> containerDFS;
+    std::priority_queue<BnBNode, std::vector<BnBNode>> containerBeFS;
 
 
 

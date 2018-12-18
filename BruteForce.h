@@ -27,9 +27,11 @@ private:
     int startTown{0};
     int bestDistance{INT_MAX};
     int currentDistance{};
+    std::vector<bool> visitedTowns;
+    void handleTheRoute(int town);
+    void handleLasElementOfRoute(int town);
 
-
-    void generateSolution();
+    void generateSolution(int town);
     void prepend();
     bool isBetter();
 };
