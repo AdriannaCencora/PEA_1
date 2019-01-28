@@ -16,9 +16,9 @@ public:
     virtual void displayRouteDetails() = 0;
     virtual ~Algorithm() = default;
 protected:
-    MatrixGraph *graph;
-    std::chrono::high_resolution_clock::time_point startTime;
-    std::chrono::high_resolution_clock::time_point endTime;
+    MatrixGraph *graph{};
+    std::chrono::high_resolution_clock::time_point startTime{};
+    std::chrono::high_resolution_clock::time_point endTime{};
     long long timeInMilliseconds{};
 };
 

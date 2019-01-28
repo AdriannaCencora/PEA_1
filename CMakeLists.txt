@@ -3,4 +3,4 @@ project(PEA_1)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(PEA_1 main.cpp MatrixGraph.cpp MatrixGraph.h FileHandler.cpp FileHandler.h BruteForce.cpp BruteForce.h BranchAndBound.cpp BranchAndBound.h DynamicProgramming.cpp DynamicProgramming.h Application.cpp Application.h Algorithm.h Test.cpp Test.h)
+add_executable(PEA_1 main.cpp MatrixGraph.cpp MatrixGraph.h FileHandler.cpp FileHandler.h BruteForce.cpp BruteForce.h BranchAndBound.cpp BranchAndBound.h DynamicProgramming.cpp DynamicProgramming.h Application.cpp Application.h Algorithm.h Test.cpp Test.h TabuSearch.cpp TabuSearch.h Genetic.cpp Genetic.h)

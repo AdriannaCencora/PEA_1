@@ -8,6 +8,8 @@
 #include "BranchAndBound.h"
 #include "DynamicProgramming.h"
 #include "Test.h"
+#include "TabuSearch.h"
+#include "Genetic.h"
 
 using namespace std;
 
@@ -20,6 +22,10 @@ void Application::displayMenu() {
     cout << "4. Brute force algorithm." << endl;
     cout << "5. Branch and bound algorithm." << endl;
     cout << "6. Dynamic programming." << endl;
+    cout << "7. Tabu Search" << endl;
+    cout << "8. Simulated Annealing" << endl;
+    cout << "9. Genetic." << endl;
+
     cout << "7. Test." << endl;
     cout << "0. Exit." << endl;
 
@@ -71,7 +77,21 @@ void Application::run() {
                 algorithm->displayRouteDetails();
                 break;
             }
+
             case '7': {
+                algorithm = new TabuSearch(matrixGraph);
+                algorithm->run();
+                algorithm->displayRouteDetails();
+                break;
+            }
+
+            case '8': {
+                algorithm = new Genetic(matrixGraph);
+                algorithm->run();
+                algorithm->displayRouteDetails();
+                break;
+            }
+            case 't': {
                 Test test(matrixGraph);
                 test.run();
                 break;
